@@ -37,6 +37,7 @@ jobs:
           cd artifacts
           zip -r UART-CL-linux-x64.zip UART-CL-linux-x64/*
           zip -r UART-CL-osx-arm64.zip UART-CL-osx-arm64/*
+          zip -r UART-CL-osx-x64.zip UART-CL-osx-x64/*
           cd ..
 
       - name: Calculate next version
@@ -99,6 +100,7 @@ jobs:
           files: |
             artifacts/UART-CL-linux-x64.zip
             artifacts/UART-CL-osx-arm64.zip
+            artifacts/UART-CL-osx-x64.zip
             artifacts/UART-CL-win-x64/UART-CL By TheCod3r.exe
           draft: false
           prerelease: false

@@ -13,16 +13,22 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-x64, macos-arm64, macos-x64, linux-x64]
         include:
-          - os: windows-latest
+          - os: windows-x64
             runtime: win-x64
-          - os: macos-latest
+            runner: windows-latest
+          - os: macos-arm64
             runtime: osx-arm64
-          - os: ubuntu-latest
+            runner: macos-latest
+          - os: macos-x64
+            runtime: osx-x64
+            runner: macos-latest
+          - os: linux-x64
             runtime: linux-x64
+            runner: ubuntu-latest
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.runner }}
 
     steps:
     - uses: actions/checkout@v4
