@@ -24,12 +24,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Debug workflow run info
-        run: |
-          echo "Workflow Run ID: ${{ github.event.workflow_run.id }}"
-          echo "Workflow Run Status: ${{ github.event.workflow_run.status }}"
-          echo "Workflow Run Conclusion: ${{ github.event.workflow_run.conclusion }}"
-
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
@@ -42,6 +36,13 @@ jobs:
         run: |
           echo "Listing contents of artifacts directory:"
           ls -R artifacts/
+
+      - name: Zip Linux and MacOS artifacts
+        run: |
+          cd artifacts
+          zip -r UART-CL-linux-x64.zip UART-CL-linux-x64/*
+          zip -r UART-CL-osx-arm64.zip UART-CL-osx-arm64/*
+          cd ..
 
       - name: Calculate next version
         id: version
@@ -94,9 +95,9 @@ jobs:
           name: Release ${{ steps.version.outputs.new_tag }}
           body: ${{ steps.version.outputs.changelog }}
           files: |
-            artifacts/UART-CL-linux-x64/**/*
-            artifacts/UART-CL-osx-arm64/**/*
-            artifacts/UART-CL-win-x64/**/*
+            artifacts/UART-CL-linux-x64.zip
+            artifacts/UART-CL-osx-arm64.zip
+            artifacts/UART-CL-win-x64/UART-CL By TheCod3r.exe
           draft: false
           prerelease: false
         env:
