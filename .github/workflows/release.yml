@@ -34,17 +34,13 @@ jobs:
 
       - name: Prepare artifacts
         run: |
-          echo "Listing contents of artifacts directory:"
-          ls -R artifacts/
           cd artifacts
-          zip -r UART-CL-linux-x64.zip UART-CL-linux-x64/*
-          zip -r UART-CL-osx-arm64.zip UART-CL-osx-arm64/*
-          zip -r UART-CL-osx-x64.zip UART-CL-osx-x64/*
-          zip -r PS5-NOR-Modifier-win-x64.zip PS5-NOR-Modifier-win-x64/*
+          zip -r UART-CL-linux-x64.zip UART-CL-linux-x64/**/publish/*
+          zip -r UART-CL-osx-arm64.zip UART-CL-osx-arm64/**/publish/*
+          zip -r UART-CL-osx-x64.zip UART-CL-osx-x64/**/publish/*
+          zip -r PS5-NOR-Modifier-win-x64.zip PS5-NOR-Modifier-win-x64/**/publish/*
           # Copy the Windows CLI exe directly
-          cp "UART-CL-win-x64/UART-CL By TheCod3r/UART-CL By TheCod3r/bin/Release/net6.0/win-x64/publish/UART-CL By TheCod3r.exe" ./
-          echo "Listing contents after zipping:"
-          ls -la
+          cp UART-CL-win-x64/**/publish/*.exe ./
           cd ..
 
       - name: Calculate next version
