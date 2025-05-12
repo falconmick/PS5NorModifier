@@ -7,26 +7,41 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_PATH: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
+  CLI_PROJECT_PATH: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
+  APP_PROJECT_PATH: "PS5 NOR Modifier/PS5 NOR Modifier.csproj"
 
 jobs:
   build:
     strategy:
       matrix:
-        os: [windows-x64, macos-arm64, macos-x64, linux-x64]
         include:
+          # UART-CL Project
           - os: windows-x64
             runtime: win-x64
             runner: windows-latest
+            project: ${{ env.CLI_PROJECT_PATH }}
+            app-name: "UART-CL"
           - os: macos-arm64
             runtime: osx-arm64
             runner: macos-latest
+            project: ${{ env.CLI_PROJECT_PATH }}
+            app-name: "UART-CL"
           - os: macos-x64
             runtime: osx-x64
             runner: macos-latest
+            project: ${{ env.CLI_PROJECT_PATH }}
+            app-name: "UART-CL"
           - os: linux-x64
             runtime: linux-x64
             runner: ubuntu-latest
+            project: ${{ env.CLI_PROJECT_PATH }}
+            app-name: "UART-CL"
+          # PS5 NOR Modifier Project (Windows only)
+          - os: windows-x64
+            runtime: win-x64
+            runner: windows-latest
+            project: ${{ env.APP_PROJECT_PATH }}
+            app-name: "PS5-NOR-Modifier"
 
     runs-on: ${{ matrix.runner }}
 
@@ -39,16 +54,16 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Restore dependencies
-      run: dotnet restore "${{ env.PROJECT_PATH }}" -r ${{ matrix.runtime }}
+      run: dotnet restore "${{ matrix.project }}" -r ${{ matrix.runtime }}
 
     - name: Build
-      run: dotnet build "${{ env.PROJECT_PATH }}" --configuration Release --no-restore
+      run: dotnet build "${{ matrix.project }}" --configuration Release --no-restore
 
     - name: Publish
-      run: dotnet publish "${{ env.PROJECT_PATH }}" --configuration Release --runtime ${{ matrix.runtime }} --self-contained true -p:PublishSingleFile=true --no-restore
+      run: dotnet publish "${{ matrix.project }}" --configuration Release --runtime ${{ matrix.runtime }} --self-contained true -p:PublishSingleFile=true --no-restore
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: UART-CL-${{ matrix.runtime }}
-        path: UART-CL By TheCod3r/UART-CL By TheCod3r/bin/Release/net6.0/${{ matrix.runtime }}/publish/ 
+        name: ${{ matrix.app-name }}-${{ matrix.runtime }}
+        path: ${{ github.workspace }}/**/${{ matrix.runtime }}/publish/ 
