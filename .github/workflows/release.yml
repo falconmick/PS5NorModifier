@@ -10,7 +10,7 @@ on:
 
 env:
   MAJOR_VERSION: "1"
-  MINOR_VERSION: "2"
+  MINOR_VERSION: "3"
 
 jobs:
   release:
@@ -59,7 +59,14 @@ jobs:
           echo "new_tag=${FULL_VERSION}" >> $GITHUB_OUTPUT
           
           # Generate changelog
-          PREV_TAG=$(git tag -l "v${BASE_VERSION}.*" | sort -V | tail -n 1 || echo "")
+          # Get all version tags and sort them, excluding the current version and anything newer
+          PREV_TAG=$(git tag -l "v*.*.*" | sort -V | while read tag; do
+            # Only keep tags that are strictly less than our new version
+            if [ "$(echo -e "${FULL_VERSION}\n${tag}" | sort -V | head -n1)" = "${tag}" ] && [ "${tag}" != "${FULL_VERSION}" ]; then
+              echo "$tag"
+            fi
+          done | tail -n1 || echo "")
+          
           if [ -z "$PREV_TAG" ]; then
             # If no previous tag, use all commits
             CHANGELOG=$(git log --pretty=format:"* %s" || echo "Initial release")
