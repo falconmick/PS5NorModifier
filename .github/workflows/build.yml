@@ -8,10 +8,6 @@ on:
 
 jobs:
   build:
-    env:
-      CLI_PROJECT_PATH: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
-      APP_PROJECT_PATH: "PS5 NOR Modifier/PS5 NOR Modifier.csproj"
-
     strategy:
       matrix:
         include:
@@ -19,28 +15,28 @@ jobs:
           - os: windows-x64
             runtime: win-x64
             runner: windows-latest
-            project: ${{ env.CLI_PROJECT_PATH }}
+            project: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
             app-name: "UART-CL"
           - os: macos-arm64
             runtime: osx-arm64
             runner: macos-latest
-            project: ${{ env.CLI_PROJECT_PATH }}
+            project: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
             app-name: "UART-CL"
           - os: macos-x64
             runtime: osx-x64
             runner: macos-latest
-            project: ${{ env.CLI_PROJECT_PATH }}
+            project: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
             app-name: "UART-CL"
           - os: linux-x64
             runtime: linux-x64
             runner: ubuntu-latest
-            project: ${{ env.CLI_PROJECT_PATH }}
+            project: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
             app-name: "UART-CL"
           # PS5 NOR Modifier Project (Windows only)
           - os: windows-x64
             runtime: win-x64
             runner: windows-latest
-            project: ${{ env.APP_PROJECT_PATH }}
+            project: "PS5 NOR Modifier/PS5 NOR Modifier.csproj"
             app-name: "PS5-NOR-Modifier"
 
     runs-on: ${{ matrix.runner }}
