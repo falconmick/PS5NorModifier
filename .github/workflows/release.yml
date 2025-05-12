@@ -40,7 +40,7 @@ jobs:
           zip -r UART-CL-osx-x64.zip . -i UART-CL-osx-x64/**/publish/*
           zip -r PS5-NOR-Modifier-win-x64.zip . -i PS5-NOR-Modifier-win-x64/**/publish/*
           # Copy the Windows CLI exe directly
-          cp UART-CL-win-x64/**/publish/*.exe ./
+          find UART-CL-win-x64 -path "*/publish/*.exe" -exec cp {} ./ \;
           cd ..
 
       - name: Calculate next version
