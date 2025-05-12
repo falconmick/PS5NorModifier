@@ -6,12 +6,12 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  CLI_PROJECT_PATH: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
-  APP_PROJECT_PATH: "PS5 NOR Modifier/PS5 NOR Modifier.csproj"
-
 jobs:
   build:
+    env:
+      CLI_PROJECT_PATH: "UART-CL By TheCod3r/UART-CL By TheCod3r/UART-CL By TheCod3r.csproj"
+      APP_PROJECT_PATH: "PS5 NOR Modifier/PS5 NOR Modifier.csproj"
+
     strategy:
       matrix:
         include:
