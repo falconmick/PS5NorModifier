@@ -36,10 +36,10 @@ jobs:
         run: |
           cd artifacts
           ls -R
-          zip -j UART-CL-linux-x64.zip UART-CL-linux-x64/**/publish/*
-          zip -j UART-CL-osx-arm64.zip UART-CL-osx-arm64/**/publish/*
-          zip -j UART-CL-osx-x64.zip UART-CL-osx-x64/**/publish/*
-          zip -j PS5-NOR-Modifier-win-x64.zip PS5-NOR-Modifier-win-x64/**/publish/*
+          zip -j UART-CL-linux-x64.zip $(find UART-CL-linux-x64 -type f -path '*/publish/*')
+          zip -j UART-CL-osx-arm64.zip $(find UART-CL-osx-arm64 -type f -path '*/publish/*')
+          zip -j UART-CL-osx-x64.zip $(find UART-CL-osx-x64 -type f -path '*/publish/*')
+          zip -j PS5-NOR-Modifier-win-x64.zip $(find PS5-NOR-Modifier-win-x64 -type f -path '*/publish/*')
           # Copy the Windows CLI exe directly
           find UART-CL-win-x64 -path "*/publish/*.exe" -exec cp {} ./ \;
           cd ..
