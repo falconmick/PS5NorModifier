@@ -27,12 +27,12 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: UART-CL-*
+          pattern: "*"
           path: artifacts
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Zip Linux and MacOS artifacts
+      - name: Prepare artifacts
         run: |
           cd artifacts
           zip -r UART-CL-linux-x64.zip UART-CL-linux-x64/*
@@ -102,6 +102,7 @@ jobs:
             artifacts/UART-CL-osx-arm64.zip
             artifacts/UART-CL-osx-x64.zip
             artifacts/UART-CL-win-x64/UART-CL By TheCod3r.exe
+            artifacts/PS5-NOR-Modifier-win-x64/PS5 NOR Modifier.exe
           draft: false
           prerelease: false
         env:
