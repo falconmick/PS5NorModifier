@@ -34,10 +34,14 @@ jobs:
 
       - name: Prepare artifacts
         run: |
+          echo "Listing contents of artifacts directory:"
+          ls -R artifacts/
           cd artifacts
           zip -r UART-CL-linux-x64.zip UART-CL-linux-x64/*
           zip -r UART-CL-osx-arm64.zip UART-CL-osx-arm64/*
           zip -r UART-CL-osx-x64.zip UART-CL-osx-x64/*
+          echo "Listing contents after zipping:"
+          ls -la
           cd ..
 
       - name: Calculate next version
