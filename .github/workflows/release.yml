@@ -32,11 +32,6 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: List downloaded artifacts
-        run: |
-          echo "Listing contents of artifacts directory:"
-          ls -R artifacts/
-
       - name: Zip Linux and MacOS artifacts
         run: |
           cd artifacts
