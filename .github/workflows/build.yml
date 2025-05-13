@@ -62,10 +62,10 @@ jobs:
       run: dotnet build "${{ matrix.project }}" --configuration Release --no-restore
 
     - name: Publish
-      run: dotnet publish "${{ matrix.project }}" --configuration Release --runtime ${{ matrix.runtime }} --self-contained true -p:PublishSingleFile=true --no-restore
+      run: dotnet publish "${{ matrix.project }}" --configuration Release --runtime ${{ matrix.runtime }} --self-contained true -p:PublishSingleFile=true --no-restore -o "${{ github.workspace }}/artifact-staging/${{ matrix.runtime }}"
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.app-name }}-${{ matrix.runtime }}
-        path: ${{ github.workspace }}/**/${{ matrix.runtime }}/publish/ 
+        path: ${{ github.workspace }}/artifact-staging/${{ matrix.runtime }}/
