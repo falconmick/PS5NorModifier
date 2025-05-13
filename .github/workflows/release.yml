@@ -83,7 +83,7 @@ jobs:
             echo "### Windows"
             echo "After downloading the windows binary, you should just be able to run the executable and after allowing it to run, you should be able to use it."
             echo "### MacOS"
-            echo "After downloading the macos binary, you will need to run the `UART-CL By TheCod3r` command once to have macos gatekeeper block it, from there you can open your settings app, then scroll down to Security section and find the blocked app. Note a seperate lib for serial connections for macos is required which is why `libSystem.IO.Ports.Native.dylib` exists, it too will be blocked and will require unblocking."
+            echo "After downloading the macos binary, unblock the executable, see image bellow for how to find it. Just hit `Open Anyways` and follow prompts"
             echo ""
             echo "![MacOS Security Settings](docs/allow_macos.jpg)"
             echo ""
