@@ -32,14 +32,12 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare artifacts
+      - name: Prepare app artifacts
         run: |
           cd artifacts
-          # Copy the Windows CLI exe directly
-          cp UART-CL-win-x64/*.exe ./
-          
           # Create zip for Windows app
-          zip -r PS5-NOR-Modifier-win-x64.zip PS5-NOR-Modifier-win-x64/*
+          cd PS5-NOR-Modifier-win-x64
+          zip -r PS5-NOR-Modifier-win-x64.zip .
 
       - name: Calculate next version
         id: version
@@ -99,11 +97,9 @@ jobs:
           name: Release ${{ steps.version.outputs.new_tag }}
           body: ${{ steps.version.outputs.changelog }}
           files: |
-            artifacts/UART-CL-linux-x64/*.tar.gz
-            artifacts/UART-CL-osx-arm64/*.tar.gz
-            artifacts/UART-CL-osx-x64/*.tar.gz
-            artifacts/UART-CL By TheCod3r.exe
-            artifacts/PS5-NOR-Modifier-win-x64.zip
+            artifacts/**/*.tar.gz
+            artifacts/**/*.zip
+            artifacts/**/*.exe
           draft: false
           prerelease: false
         env:
