@@ -35,17 +35,11 @@ jobs:
       - name: Prepare artifacts
         run: |
           cd artifacts
-          find . -type f -exec ls -l {} \;
-          
-          # Create tar archives to preserve permissions
-          tar -czf UART-CL-linux-x64.tar.gz UART-CL-linux-x64/
-          tar -czf UART-CL-osx-arm64.tar.gz UART-CL-osx-arm64/
-          tar -czf UART-CL-osx-x64.tar.gz UART-CL-osx-x64/
-          tar -czf PS5-NOR-Modifier-win-x64.tar.gz PS5-NOR-Modifier-win-x64/
-          
-          # Copy the Windows CLI exe directly (no need to tar since Windows doesn't use Unix permissions)
+          # Copy the Windows CLI exe directly
           cp UART-CL-win-x64/*.exe ./
-          cd ..
+          
+          # Create zip for Windows app
+          zip -r PS5-NOR-Modifier-win-x64.zip PS5-NOR-Modifier-win-x64/*
 
       - name: Calculate next version
         id: version
@@ -105,11 +99,11 @@ jobs:
           name: Release ${{ steps.version.outputs.new_tag }}
           body: ${{ steps.version.outputs.changelog }}
           files: |
-            artifacts/UART-CL-linux-x64.tar.gz
-            artifacts/UART-CL-osx-arm64.tar.gz
-            artifacts/UART-CL-osx-x64.tar.gz
+            artifacts/UART-CL-linux-x64/*.tar.gz
+            artifacts/UART-CL-osx-arm64/*.tar.gz
+            artifacts/UART-CL-osx-x64/*.tar.gz
             artifacts/UART-CL By TheCod3r.exe
-            artifacts/PS5-NOR-Modifier-win-x64.tar.gz
+            artifacts/PS5-NOR-Modifier-win-x64.zip
           draft: false
           prerelease: false
         env:
