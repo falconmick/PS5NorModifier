@@ -35,10 +35,9 @@ jobs:
       - name: Prepare artifacts
         run: |
           cd artifacts
-          ls -R
-          zip -r UART-CL-linux-x64.zip UART-CL-linux-x64/*
-          zip -r UART-CL-osx-arm64.zip UART-CL-osx-arm64/*
-          zip -r UART-CL-osx-x64.zip UART-CL-osx-x64/*
+          tar czvf UART-CL-linux-x64.tar.gz UART-CL-linux-x64/
+          tar czvf UART-CL-osx-arm64.tar.gz UART-CL-osx-arm64/
+          tar czvf UART-CL-osx-x64.tar.gz UART-CL-osx-x64/
           zip -r PS5-NOR-Modifier-win-x64.zip PS5-NOR-Modifier-win-x64/*
           # Copy the Windows CLI exe directly
           cp UART-CL-win-x64/*.exe ./
