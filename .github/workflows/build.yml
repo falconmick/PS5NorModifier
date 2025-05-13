@@ -64,8 +64,18 @@ jobs:
     - name: Publish
       run: dotnet publish "${{ matrix.project }}" --configuration Release --runtime ${{ matrix.runtime }} --self-contained true -p:PublishSingleFile=true --no-restore -o "${{ github.workspace }}/artifact-staging/${{ matrix.runtime }}"
 
+    - name: Prepare artifacts for upload
+      run: |
+        mkdir -p ${{ github.workspace }}/artifact-drop
+        if [[ "${{ runner.os }}" == "macOS" || "${{ runner.os }}" == "Linux" ]]; then
+          cd ${{ github.workspace }}/artifact-staging/${{ matrix.runtime }}
+          tar -czvf ${{ github.workspace }}/artifact-drop/${{ matrix.app-name }}-${{ matrix.runtime }}.tar.gz .
+        else
+          cp -r ${{ github.workspace }}/artifact-staging/${{ matrix.runtime }}/* ${{ github.workspace }}/artifact-drop/
+        fi
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.app-name }}-${{ matrix.runtime }}
-        path: ${{ github.workspace }}/artifact-staging/${{ matrix.runtime }}/
+        path: ${{ github.workspace }}/artifact-drop/
