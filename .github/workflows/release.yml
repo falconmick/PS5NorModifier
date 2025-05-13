@@ -6,7 +6,7 @@ on:
     types:
       - completed
     branches:
-      - main
+      - feature/pre-release
 
 env:
   MAJOR_VERSION: "1"
