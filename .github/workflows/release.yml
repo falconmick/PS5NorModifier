@@ -11,6 +11,7 @@ on:
 env:
   MAJOR_VERSION: "1"
   MINOR_VERSION: "3"
+  CURRENT_RELEASE: "1.2"
 
 jobs:
   release:
@@ -93,6 +94,13 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Calculate version status
+        id: version_status
+        run: |
+          BASE_VERSION="${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}"
+          IS_PRERELEASE=$([ "$BASE_VERSION" != "${{ env.CURRENT_RELEASE }}" ] && echo "true" || echo "false")
+          echo "is_prerelease=${IS_PRERELEASE}" >> $GITHUB_OUTPUT
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -103,7 +111,7 @@ jobs:
             artifacts/**/*.tar.gz
             artifacts/**/*.zip
             artifacts/UART-CL-win-x64/UART-CL By TheCod3r.exe
-          draft: false
-          prerelease: false
+          draft: ${{ steps.version_status.outputs.is_prerelease == 'false' }}
+          prerelease: ${{ steps.version_status.outputs.is_prerelease == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
