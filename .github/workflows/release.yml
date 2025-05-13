@@ -99,8 +99,7 @@ jobs:
           files: |
             artifacts/**/*.tar.gz
             artifacts/**/*.zip
-            artifacts/UART-CL By TheCod3r.exe
-
+            artifacts/UART-CL-win-x64/UART-CL By TheCod3r.exe
           draft: false
           prerelease: false
         env:
